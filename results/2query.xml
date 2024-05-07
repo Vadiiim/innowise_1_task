@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<root>
+	<item type="dict">
+		<id type="int">661</id>
+		<name type="str">Room #661</name>
+	</item>
+	<item type="dict">
+		<id type="int">913</id>
+		<name type="str">Room #913</name>
+	</item>
+	<item type="dict">
+		<id type="int">111</id>
+		<name type="str">Room #111</name>
+	</item>
+	<item type="dict">
+		<id type="int">957</id>
+		<name type="str">Room #957</name>
+	</item>
+	<item type="dict">
+		<id type="int">773</id>
+		<name type="str">Room #773</name>
+	</item>
+</root>
