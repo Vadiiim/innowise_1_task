@@ -11,6 +11,7 @@ import logging
 
 
 
+
 def get_data_users_dbname():
     load_dotenv()
     return os.getenv('database_name'),os.getenv('user_name'),os.getenv('password'),os.getenv('host'),os.getenv('port'),os.getenv('res_type')
@@ -39,9 +40,9 @@ class DataBase:
     __password=''
     __host=''
     __port=''
-   
 
-    
+
+
     def __init__(self,database_name,user_name,password,host,port) -> None:
         self.__database_name=database_name
         self.__user_name=user_name
@@ -52,9 +53,9 @@ class DataBase:
     def creating_table(self):
         try:
             conn = psycopg2.connect(f"dbname={self.__database_name} user={self.__user_name} password={self.__password} host={self.__host} port={self.__port}")
-            
+
             cur = conn.cursor()
-            
+
             cur.execute("""
                 CREATE TYPE mood AS ENUM('M','F');
                 CREATE TABLE IF NOT EXISTS students (
@@ -62,7 +63,7 @@ class DataBase:
                     birthday timestamp,
                     name TEXT,
                     room INT,
-                    sex mood 
+                    sex mood
                 )
             """)
             cur.execute("""
@@ -76,18 +77,22 @@ class DataBase:
             cur.close()
             conn.close()
         except psycopg2.Error as e:
-                if e.pgcode == '42P07':  
+
+                if e.pgcode == '42P07':
                     logging.warning("Table is already exist")
                 else:
                     logging.warning(f"Error: {e}")
-                   
+                return "Error" ;
+
         except :
+
             logging.error("Check that the database exists, the user exists, and the password is correct.")
             logging.warning("Tabels wasn't created! It can be dangerous for program")
-    
-        
-            
-            
+            return "Error" ;
+
+
+
+
 
 
 
@@ -104,19 +109,23 @@ class DataBase:
             cur.close()
             conn.close()
         except psycopg2.OperationalError as e:
+
             logging.error(f"Error: {e}")
+            return "Error" ;
         except :
+
             logging.error("Check that the database exists, the user exists, and the password is correct.")
-    
+            return "Error" ;
+
 
     def make_queries(self,queries_directory,type_of_result_file):
-        
+
             conn = psycopg2.connect(f"dbname={self.__database_name} user={self.__user_name} password={self.__password} host={self.__host} port={self.__port}")
             cur = conn.cursor()
             for file in os.listdir(queries_directory):
                 path_to_quaery=os.path.join(queries_directory, file)
                 if os.path.isfile(path_to_quaery):
-                    
+
                     with open(path_to_quaery,'r') as f:
                         content_in_file=f.read()
                     cur.execute(content_in_file)
@@ -131,25 +140,36 @@ class DataBase:
                         results_json = json.dumps(results)
                         with open('./results/'+os.path.splitext(file)[0]+'.json', 'w') as j:
                             j.write(results_json)
-                    else :
+                    elif  type_of_result_file=='xml':
                         results_xml = dicttoxml(results)
                         dom = parseString(results_xml)
                         with open('./results/'+os.path.splitext(file)[0]+'.xml', 'w') as x:
                             x.write(dom.toprettyxml())
-            
+                    else:
+                        results_json = json.dumps(results)
+                        with open('./results/'+os.path.splitext(file)[0]+'.json', 'w') as j:
+                            j.write(results_json)
+                        results_xml = dicttoxml(results)
+                        dom = parseString(results_xml)
+                        with open('./results/'+os.path.splitext(file)[0]+'.xml', 'w') as x:
+                            x.write(dom.toprettyxml())
+
             logging.info("Quaeries successfuly passed!")
             conn.commit()
             cur.close()
             conn.close()
-       
-        
+
+
 
 # end class
 
-    
+
 
 #main start
+logger = logging.getLogger('dicttoxml')
 
+# Установите уровень логирования на ERROR (или любой другой уровень, который вы хотите)
+logger.setLevel(logging.ERROR)
 
 logging.basicConfig(level=logging.INFO, filename="py_log.log",filemode="w",encoding='UTF-8')
 
@@ -186,9 +206,3 @@ database.filling_table(students,rooms)
 database.make_queries(queries_directory,type_of_result_file)
 
 #main end
-
-
-
-
-
-
