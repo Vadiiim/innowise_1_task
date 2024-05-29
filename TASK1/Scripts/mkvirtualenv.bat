@@ -2,20 +2,20 @@
 :: Create a new environment, in the WORKON_HOME.
 ::
 :: Syntax:
-:: 
+::
 :: mkvirtualenv [-a project_path] [-i package] [-r requirements_file] [virtualenv options] %venvwrapper.envname%
 ::
-:: All command line options except -a, -i, -r, and -h are passed directly 
+:: All command line options except -a, -i, -r, and -h are passed directly
 :: to virtualenv. The new environment is automatically activated after being
 :: initialized.
 ::
 :: The -a option can be used to associate an existing project directory
 :: with the new environment.
 ::
-:: The -i option can be used to install one or more packages (by repeating 
+:: The -i option can be used to install one or more packages (by repeating
 :: the option) after the environment is created.
 ::
-:: The -r option can be used to specify a text file listing packages to be 
+:: The -r option can be used to specify a text file listing packages to be
 :: installed. The argument value is passed to pip -r to be installed.
 ::
 
@@ -38,7 +38,7 @@
 if [%1]==[] goto:usage
 
 
-setlocal 
+setlocal
 :: virtualenv options that take a paramter
 set "virualenv_param_options=-p --python --extra-search-dir --prompt"
 
@@ -272,9 +272,9 @@ goto:cleanup
     echo.                        can be repeated to install more than one package.
     echo   -r requirements_file  requirements_file is passed to
     echo.                        pip install -r requirements_file
-    echo.  
+    echo.
     echo.    NOTE: all mkvirtualenv-options must come before virtualenv-options!
-    echo. 
+    echo.
     echo.Options not specified above are passed to virtualenv:
     echo.
     echo %venvwrapper.virtualenv_executable% -h

@@ -1,5 +1,6 @@
 INFO:root:./jsonfiles/students.json was readed
 INFO:root:./jsonfiles/rooms.json was readed
-INFO:root:Tables successfuly created!
-INFO:root:Tables successfuly filled!
+WARNING:root:Error: ОШИБКА:  тип "mood" уже существует
+
+ERROR:root:Check that the database exists, the user exists, and the password is correct.
 INFO:root:Quaeries successfuly passed!

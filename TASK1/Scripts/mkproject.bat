@@ -3,7 +3,7 @@
 :: Convenience script to create a project directory and an associated virtualenv
 ::
 :: Syntax:
-:: 
+::
 :: mkproject PROJ_DIR
 ::
 
@@ -59,7 +59,7 @@ exit /b 0
     echo.
     echo.The new environment is automatically activated after being initialized.
     :: fall through
-    
+
 :cleanup
     set PROJ_DIR=
     goto:eof

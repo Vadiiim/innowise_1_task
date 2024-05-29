@@ -6,18 +6,18 @@ services:
     environment:
       POSTGRES_PASSWORD: ${password}
       POSTGRES_USER: ${postgres}
-      POSTGRES_DB: ${database_name} 
-      POSTGRES_HOST: ${host} 
+      POSTGRES_DB: ${database_name}
+      POSTGRES_HOST: ${host}
     ports:
-      - "5432:5432"   
+      - "5432:5432"
   app:
     build: .
     environment:
       - res_type=${res_type}
     command: ["/app/wait-for-it.sh", "db", "5432", "--", "python", "main.py"]
     volumes:
-      - ./results:/app/results  
-      - ./py_log.log:/app/py_log.log  
+      - ./results:/app/results
+      - ./py_log.log:/app/py_log.log
     ports:
       - "8000:8000"
     depends_on:
